@@ -26,6 +26,8 @@ option(OpenMVG_BUILD_SOFTWARES "Build OpenMVG softwares" ON)
 option(OpenMVG_BUILD_GUI_SOFTWARES "Build OpenMVG GUI softwares (QT5)" ON)
 option(OpenMVG_BUILD_COVERAGE "Enable code coverage generation (gcc only)" OFF)
 option(OpenMVG_USE_OPENMP "Enable OpenMP parallelization" ON)
+option(OpenMVG_BUILD_SFM_NET_PIPELINE "Build SFM networking pipeline" ON)
+
 # ==============================================================================
 # Opencv is not used by openMVG but some samples show how to use openCV
 #  and openMVG simultaneously
@@ -405,6 +407,10 @@ endif (OpenMVG_BUILD_SOFTWARES)
 
 # Included for research purpose only
 add_subdirectory(nonFree)
+
+if (OpenMVG_BUILD_SFM_NET_PIPELINE)
+    add_subdirectory(SfMNetPipeline)
+endif (OpenMVG_BUILD_SFM_NET_PIPELINE)
 
 # ==============================================================================
 # Documentation
