@@ -222,6 +222,17 @@ MACRO(UNIT_TEST NAMESPACE NAME EXTRA_LIBS)
 ENDMACRO(UNIT_TEST)
 
 # ==============================================================================
+# pybind11
+# ==============================================================================
+# - external by default
+# - internal if pybind11 not found
+# ==============================================================================
+find_package(pybind11 QUIET)
+if (NOT pybind11_FOUND)
+    set(OPENMVG_USER_INTERNAL_PYBIND11 ON)
+endif()
+
+# ==============================================================================
 # cereal
 # ==============================================================================
 # - external by default
@@ -408,10 +419,7 @@ endif (OpenMVG_BUILD_SOFTWARES)
 # Included for research purpose only
 add_subdirectory(nonFree)
 
-if (OpenMVG_BUILD_SFM_NET_PIPELINE)
-    add_subdirectory(SfMNetPipeline)
-endif (OpenMVG_BUILD_SFM_NET_PIPELINE)
-
+add_subdirectory(sfmNet_test)
 # ==============================================================================
 # Documentation
 # --------------------------

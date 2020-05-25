@@ -1,0 +1,4 @@
+#ifndef OPENMVG_SFM_SFM_HPP
+#define OPENMVG_SFM_SFM_HPP
+
+#endif // OPENMVG_SFM_SFM_HPP

@@ -18,6 +18,7 @@ add_subdirectory(color_harmonization)
 add_subdirectory(system)
 add_subdirectory(sfm)
 add_subdirectory(stl)
+add_subdirectory(sfmNet)
 
 #INSTALL RULES
 install(

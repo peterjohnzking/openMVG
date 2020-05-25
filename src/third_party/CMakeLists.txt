@@ -17,6 +17,10 @@ set(STLPLUS_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/openMVG/third_pa
 add_subdirectory(stlplus3)
 set(STLPLUS_LIBRARY openMVG_stlplus PARENT_SCOPE)
 
+if(DEFINED OPENMVG_USER_INTERNAL_PYBIND11) 
+  add_subdirectory(pybind11)
+endif()
+
 # Add graph library
 if(DEFINED OpenMVG_USE_INTERNAL_LEMON)
   add_subdirectory(lemon)
