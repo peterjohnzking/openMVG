@@ -27,6 +27,7 @@ using namespace std;
 
 
 
+
 // -------- HEADER_FILE: sfmNet.hpp ----------------------------------------------------------------------------------------------------
 
 //--------------------------------------
@@ -47,6 +48,59 @@ sfmNet_load_images(const std::string & image_path, bool mask = false);
 
 namespace openMVG {
 namespace sfmNet {
+
+void print(Image<unsigned char> image)
+{
+  for (int i = 0; i < image.Width() * image.Height(); ++i) {
+    std::cout << image[i] << " ";
+  }
+  std::cout << std::endl;
+}
+void test()
+{
+  int width = 5;
+  int height = 4;
+  std::vector<unsigned char> data(width*height);
+  std::generate(data.begin(), data.end(), std::rand);
+
+  Image<unsigned char> image;
+  image = Eigen::Map<Image<unsigned char>::Base>(&data[0], height, width);
+  
+  std::string sep = "\n--------------------------------------------------------------------\n";
+  
+  system::Timer timer;
+  
+  print(image);
+  timer.reset();
+
+  // outputs image pixels to string 
+  std::ostringstream img_stream;
+
+  img_stream << image;
+
+  std::string img_data = img_stream.str();
+  std::cout << "Time for output image (outstream) : " << timer.elapsedMs() << std::endl;
+  std::cout << sep;
+
+  Image<unsigned char> image2;
+  
+
+  
+  timer.reset();
+
+  // outputs image pixels to string 
+  std::istringstream img_stream2(img_data);
+
+  img_stream2 >> image2;
+
+  double time = timer.elapsedMs();
+  print(image2);
+
+  std::cout << "Time for output image (outstream) : " <<  time << std::endl;
+  std::cout << sep;
+
+
+}
 
 std::tuple<std::string, double, double, std::string, double> 
 sfmNet_load_images(const std::string & image_path, bool mask)
@@ -98,6 +152,7 @@ sfmNet_load_images(const std::string & image_path, bool mask)
       throw std::invalid_argument(stlplus::basename_part(image_path) + ": Focal length is missing.");
     }
   }
+
   std::cout << "Time for read metadata: " << timer.elapsedMs() << std::endl;
 
   timer.reset();
@@ -111,12 +166,21 @@ sfmNet_load_images(const std::string & image_path, bool mask)
   std::cout << "Time for output image (outstream) : " << timer.elapsedMs() << std::endl;
   
   return std::tuple<std::string, double, double, std::string, double>(img_data, width, height, sCamModel, focal);
-    
 }
+
+
 
 
 } // namespace sfmNet
 } // namespace openMVG
+
+
+// -------- CPP_FILE: sfmNet_load_intrinsics.cpp ----------------------------------------------------------------------------------------------------
+void sfmNet_load_intrinsics(const std::string& image_path, bool mask)
+{
+  int a;
+
+}
 
 #endif // OPENMVG_SFMNET_SFMNET_HPP
 
