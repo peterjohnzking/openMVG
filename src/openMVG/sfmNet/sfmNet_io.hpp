@@ -11,7 +11,7 @@
 #include "openMVG/sfm/sfm_view_io.hpp"
 #include "openMVG/sfm/sfm_view_priors_io.hpp"
 #include "openMVG/types.hpp"
-
+#include "openMVG/cameras/Camera_Intrinsics.hpp"
 
 #include <Eigen/Core>
 #include <cereal/archives/json.hpp>
@@ -46,6 +46,14 @@ std::ostream & operator<<(std::ostream & out, const SfM_Data & sfm_data);
 std::istream & operator>>(std::istream & in, SfM_Data & sfm_data);
 
 }
+
+namespace cameras
+{
+
+std::ostream & operator<<(std::ostream & out, const IntrinsicBase & intrinsic);
+std::istream & operator>>(std::istream & in, IntrinsicBase & intrinsic);
+
+} // namespace cameras
 
 } // namespace openMVG
 
@@ -126,6 +134,28 @@ std::istream & operator>>(std::istream& in, SfM_Data & data)
 }
 
 } // namespace sfm
+
+namespace cameras
+{
+
+std::ostream & operator<<(std::ostream & out, const IntrinsicBase & intrinsic)
+{
+  cereal::BinaryOutputArchive archive(out);
+  archive(intrinsic);
+
+  return out;
+}
+
+std::istream& operator>>(std::istream& in, IntrinsicBase& intrinsic)
+{
+  cereal::BinaryInputArchive archive(in);
+  archive(intrinsic);
+
+  return in;
+}
+
+} // namespace cameras
+
 } // namespace openMVG
 
 

@@ -10,7 +10,8 @@
 using namespace openMVG::sfmNet;
 
 int main() {
-	test();
+	std::string path = "D:\\Users\\peter\\Source\\Repos\\openMVG\\src\\openMVG\\exif\\sensor_width_database\\sensor_width_camera_database.txt";
+	sfmNet_load_intrinsics(50, 24, "AgfaPhoto Compact 100", 3, path);
 	//std::string image, model;
 	//double width, height, focus; 
 

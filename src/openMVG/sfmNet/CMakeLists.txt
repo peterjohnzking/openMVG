@@ -34,6 +34,7 @@ target_link_libraries(openMVG_sfmNet
     openMVG_system
     openMVG_image
     openMVG_exif
+    openMVG_stlplus
     ${STLPLUS_LIBRARY}
 )
 
