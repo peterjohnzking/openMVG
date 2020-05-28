@@ -7,7 +7,6 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
-
 if (POLICY CMP0048)
   # cmake warns if loaded from a min-3.0-required parent dir, so silence the warning:
   cmake_policy(SET CMP0048 NEW)
@@ -35,15 +34,6 @@ include(pybind11Tools)
 
 # Cache variables so pybind11_add_module can be used in parent projects
 set(PYBIND11_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include" CACHE INTERNAL "")
-
-#set(PYTHON_EXECUTABLE "${CMAKE_SOURCE_DIR}/third_party/python3/python.exe" CACHE INTERNAL "")
-#set(PYTHON_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/third_party/python3/include" CACHE INTERNAL "")
-#set(PYTHON_LIBRARIES "${CMAKE_SOURCE_DIR}/third_party/python3/libs/python37.lib" CACHE INTERNAL "")
-#set(PYTHON_MODULE_PREFIX "" CACHE INTERNAL "")
-#set(PYTHON_MODULE_EXTENSION ".cp37-win32.pyd" CACHE INTERNAL "")
-#set(PYTHON_VERSION_MAJOR "3" CACHE INTERNAL "")
-#set(PYTHON_VERSION_MINOR "7" CACHE INTERNAL "")
-
 set(PYTHON_INCLUDE_DIRS ${PYTHON_INCLUDE_DIRS} CACHE INTERNAL "")
 set(PYTHON_LIBRARIES ${PYTHON_LIBRARIES} CACHE INTERNAL "")
 set(PYTHON_MODULE_PREFIX ${PYTHON_MODULE_PREFIX} CACHE INTERNAL "")

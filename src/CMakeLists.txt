@@ -252,6 +252,22 @@ if (NOT TARGET cereal)
 endif()
 
 # ==============================================================================
+# PYBIND11 
+# ==============================================================================
+# - external by default
+# - external if PYBIND11_INCLUDE_DIR_HINTS is defined
+# - internal if PYBIND11 not found
+# ==============================================================================
+find_package(PYBIND11 QUIET)
+if (NOT PYBIND11_FOUND)
+  set(PYBIND11_INCLUDE_DIR_HINTS ${CMAKE_CURRENT_SOURCE_DIR}/third_party/pybind11)
+  set(OpenMVG_USE_INTERNAL_PYBIND11 ON)
+  find_package(PYBIND11 QUIET)
+else()
+  set(EIGEN_INCLUDE_DIRS ${PYBIND11_INCLUDE_DIR})
+endif()
+
+# ==============================================================================
 # Eigen
 # ==============================================================================
 # - external by default

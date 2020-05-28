@@ -17,10 +17,6 @@ set(STLPLUS_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/openMVG/third_pa
 add_subdirectory(stlplus3)
 set(STLPLUS_LIBRARY openMVG_stlplus PARENT_SCOPE)
 
-if(DEFINED OPENMVG_USER_INTERNAL_PYBIND11) 
-  add_subdirectory(pybind11)
-endif()
-
 # Add graph library
 if(DEFINED OpenMVG_USE_INTERNAL_LEMON)
   add_subdirectory(lemon)
@@ -98,6 +94,12 @@ if (DEFINED OpenMVG_USE_INTERNAL_EIGEN)
   #Configure Eigen install
   set(EIGEN_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/openMVG/third_party/eigen)
   add_subdirectory(eigen)
+endif()
+
+if (DEFINED OpenMVG_USE_INTERNAL_PYBIND11)
+  #Configure Eigen install
+  set(EIGEN_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/openMVG/third_party/pybind11)
+  add_subdirectory(pybind11)
 endif()
 
 list(APPEND directories cmdLine histogram htmlDoc progress vectorGraphics hnswlib)

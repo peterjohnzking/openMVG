@@ -1,5 +1,8 @@
 add_executable(openMVG_sfmNet_test sfmNet_test.cpp)
 target_link_libraries(openMVG_sfmNet_test
+  INTERFACE 
+    pybind11::module
+    openMVG_sfmNet
   PRIVATE
     openMVG_system
     openMVG_image

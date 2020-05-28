@@ -15,8 +15,7 @@ file(
 #file(GLOB_RECURSE REMOVEFILESUNITTEST *_test.hpp)
 #list(REMOVE_ITEM sfmNet_files_header ${REMOVEFILESUNITTEST})
 
-add_library(openMVG_sfmNet ${sfmNet_files_header} ${sfmNet_files_cpp})
-target_compile_features(openMVG_sfmNet INTERFACE ${CXX11_FEATURES})
+pybind11_add_module(openMVG_sfmNet ${sfmNet_files_header} ${sfmNet_files_cpp})
 
 target_link_libraries(openMVG_sfmNet
   PUBLIC
@@ -32,16 +31,32 @@ target_link_libraries(openMVG_sfmNet
 target_link_libraries(openMVG_sfmNet
   LINK_PRIVATE
     ${CERES_LIBRARIES}
-    openMVG_graph
-    openMVG_image
-    openMVG_lInftyComputerVision
     openMVG_system
+    openMVG_image
+    openMVG_exif
     ${STLPLUS_LIBRARY}
 )
 
-if (MSVC)
-  set_target_properties(openMVG_sfmNet PROPERTIES COMPILE_FLAGS "/bigobj")
-endif (MSVC)
+
+target_include_directories(openMVG_sfmNet
+  PUBLIC
+    $<BUILD_INTERFACE:${EIGEN_INCLUDE_DIRS}>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>
+)
+if (DEFINED OpenMVG_USE_INTERNAL_EIGEN)
+  target_include_directories(openMVG_sfmNet PUBLIC
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include/openMVG/third_party/eigen/>)
+else()
+  target_include_directories(openMVG_sfmNet PUBLIC
+    $<INSTALL_INTERFACE:${EIGEN_INCLUDE_DIRS}>)
+endif()
+
+#add_library(openMVG_sfmNet MODULE ${sfmNet_files_header} ${sfmNet_files_cpp})
+
+#target_link_libraries(openMVG_sfmNet PRIVATE pybind11::module)
+#set_target_properties(openMVG_sfmNet PROPERTIES PREFIX "${PYTHON_MODULE_PREFIX}" SUFFIX "${PYTHON_MODULE_EXTENSION}")
+
 set_target_properties(openMVG_sfmNet PROPERTIES SOVERSION ${OPENMVG_VERSION_MAJOR} VERSION "${OPENMVG_VERSION_MAJOR}.${OPENMVG_VERSION_MINOR}")
 set_property(TARGET openMVG_sfmNet PROPERTY FOLDER OpenMVG/OpenMVG)
 install(TARGETS openMVG_sfmNet DESTINATION lib EXPORT openMVG-targets)
